@@ -1,0 +1,89 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: Lint (ruff + mypy + bandit)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Install Poetry
+        run: pipx install poetry
+      - name: Install dependencies
+        run: poetry install --no-interaction
+      - name: ruff check
+        run: poetry run ruff check local_rag tests examples scripts
+      - name: ruff format --check
+        run: poetry run ruff format --check local_rag tests examples scripts
+      - name: mypy
+        run: poetry run mypy local_rag
+      - name: bandit
+        run: poetry run bandit -c pyproject.toml -q -r local_rag
+
+  audit:
+    name: pip-audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Install Poetry
+        run: pipx install poetry
+      - name: Install dependencies (including the fastembed extra)
+        run: poetry install --no-interaction --no-root -E fastembed
+      - name: pip-audit
+        run: |
+          # Upgrade pip first so its own advisories don't fail the audit -
+          # pip is tooling, not a shipped dependency.
+          poetry run python -m pip install --upgrade -q pip
+          poetry run pip-audit
+
+  test:
+    name: Tests (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install Poetry
+        run: pipx install poetry
+      - name: Install dependencies
+        run: poetry install --no-interaction
+      - name: Run pytest (fake embedder, fake LLM, no network)
+        run: poetry run pytest -q
+      - name: Quickstart example (hashing embedder, bundled corpus)
+        run: poetry run python -m examples.quickstart
+      - name: Benchmark smoke run (retrieval only, no ollama on CI)
+        run: poetry run local-rag eval --embedder hashing --modes bm25 vector hybrid --no-generation
+      - name: Build the wheel and check the bundled data is inside
+        run: |
+          poetry build -q
+          python - <<'PY'
+          import glob, zipfile
+          names = zipfile.ZipFile(glob.glob("dist/*.whl")[0]).namelist()
+          for f in ("qa.jsonl", "us-constitution.md", "art-of-war.txt", "elements-of-style.html",
+                    "civil-disobedience.pdf", "index.html", "app.js", "style.css", "py.typed"):
+              assert any(n.endswith(f) for n in names), f
+          print("wheel ok:", len(names), "files")
+          PY

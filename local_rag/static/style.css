@@ -1,0 +1,73 @@
+:root {
+  --bg: #f7f8fb;
+  --panel: #ffffff;
+  --text: #121826;
+  --muted: #5b6475;
+  --accent: #2563eb;
+  --border: #d9dee8;
+  --cited: #e8f0ff;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b1020;
+    --panel: #121a30;
+    --text: #e6e9f2;
+    --muted: #97a0b5;
+    --accent: #5b9dff;
+    --border: #26304a;
+    --cited: #17264a;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+header, main, footer { max-width: 860px; margin: 0 auto; padding: 0 16px; }
+header h1 { margin: 24px 0 0; font-size: 1.6rem; color: var(--accent); }
+.muted { color: var(--muted); font-size: 0.9rem; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+form, #answer-box, #viewer {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+  margin: 16px 0;
+}
+textarea {
+  width: 100%;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px;
+  resize: vertical;
+}
+.controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 10px; }
+.controls label { font-size: 0.9rem; color: var(--muted); }
+select, input[type="number"] {
+  font: inherit; color: var(--text); background: var(--panel);
+  border: 1px solid var(--border); border-radius: 6px; padding: 4px 6px;
+}
+input[type="number"] { width: 4.5em; }
+button {
+  font: inherit; cursor: pointer; border-radius: 6px; border: 1px solid var(--accent);
+  background: var(--accent); color: #fff; padding: 6px 16px;
+}
+button:disabled { opacity: 0.5; cursor: wait; }
+#send { margin-left: auto; }
+h2 { font-size: 1rem; margin: 8px 0; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+#answer { white-space: pre-wrap; font-size: 1.05rem; }
+button.cite, button.source {
+  background: transparent; color: var(--accent); border: none; padding: 0 2px; font-weight: 600;
+}
+#sources { padding-left: 0; list-style: none; }
+#sources li { padding: 8px; border-radius: 8px; margin-bottom: 6px; border: 1px solid var(--border); }
+#sources li.cited { background: var(--cited); }
+.preview { margin: 4px 0 0; font-size: 0.9rem; color: var(--muted); overflow-wrap: anywhere; }
+.viewer-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+#viewer pre { white-space: pre-wrap; overflow-wrap: anywhere; font: 0.95rem/1.5 ui-monospace, monospace; }
+footer { margin: 24px auto; }

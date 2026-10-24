@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <title>local-rag</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1>local-rag</h1>
+    <p id="status" class="muted">loading index status...</p>
+  </header>
+  <main>
+    <form id="ask">
+      <label for="question" class="sr-only">Question</label>
+      <textarea id="question" rows="3" maxlength="2000" placeholder="Ask your documents..." required></textarea>
+      <div class="controls">
+        <label>Retrieval
+          <select id="mode">
+            <option value="hybrid">hybrid</option>
+            <option value="hybrid+rerank">hybrid + rerank</option>
+            <option value="vector">vector</option>
+            <option value="bm25">bm25</option>
+          </select>
+        </label>
+        <label>Top k <input id="topk" type="number" min="1" max="20" value="5"></label>
+        <label class="check"><input id="followup" type="checkbox"> follow-up</label>
+        <button id="send" type="submit">Ask</button>
+      </div>
+    </form>
+    <section id="answer-box" hidden>
+      <h2>Answer</h2>
+      <p id="answer" aria-live="polite"></p>
+      <p id="meta" class="muted"></p>
+      <h2>Sources</h2>
+      <ol id="sources"></ol>
+    </section>
+    <aside id="viewer" hidden>
+      <div class="viewer-head">
+        <strong id="viewer-title"></strong>
+        <button id="viewer-close" type="button" aria-label="Close">Close</button>
+      </div>
+      <p id="viewer-location" class="muted"></p>
+      <pre id="viewer-text"></pre>
+    </aside>
+  </main>
+  <footer class="muted">Runs 100% locally. Source text is shown as plain text and never executed.</footer>
+</body>
+</html>

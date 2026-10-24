@@ -1,0 +1,78 @@
+{
+  "embedder": "fastembed:BAAI/bge-small-en-v1.5",
+  "vector_index": "sqlite-vec",
+  "corpus": {
+    "documents": 4,
+    "chunks": 255,
+    "ingest_s": 43.4,
+    "errors": {}
+  },
+  "questions": {
+    "answerable": 41,
+    "unanswerable": 4
+  },
+  "unmatched_evidence": [],
+  "retrieval": {
+    "bm25": {
+      "questions": 41,
+      "recall@1": 0.8536585365853658,
+      "recall@3": 0.9512195121951219,
+      "recall@5": 0.9512195121951219,
+      "recall@10": 1.0,
+      "mrr@10": 0.9018583042973286,
+      "latency_ms": {
+        "bm25": 0.15,
+        "total": 0.2
+      },
+      "wall_s": 0.009
+    },
+    "vector": {
+      "questions": 41,
+      "recall@1": 0.6585365853658537,
+      "recall@3": 0.8536585365853658,
+      "recall@5": 0.926829268292683,
+      "recall@10": 0.975609756097561,
+      "mrr@10": 0.7677506775067751,
+      "latency_ms": {
+        "embed_query": 16.96,
+        "total": 21.31,
+        "vector": 4.06
+      },
+      "wall_s": 0.875
+    },
+    "hybrid": {
+      "questions": 41,
+      "recall@1": 0.8536585365853658,
+      "recall@3": 0.9512195121951219,
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "mrr@10": 0.9081300813008131,
+      "latency_ms": {
+        "bm25": 0.17,
+        "embed_query": 16.02,
+        "fuse": 0.02,
+        "total": 16.71,
+        "vector": 0.38
+      },
+      "wall_s": 0.686
+    },
+    "hybrid+rerank": {
+      "questions": 41,
+      "recall@1": 0.8292682926829268,
+      "recall@3": 0.9512195121951219,
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "mrr@10": 0.901219512195122,
+      "latency_ms": {
+        "bm25": 0.27,
+        "embed_query": 13.07,
+        "fuse": 0.02,
+        "rerank": 3081.12,
+        "total": 3095.27,
+        "vector": 0.45
+      },
+      "wall_s": 126.907
+    }
+  },
+  "generation": null
+}

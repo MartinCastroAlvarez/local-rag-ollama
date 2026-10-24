@@ -1,0 +1,78 @@
+{
+  "embedder": "hashing:512",
+  "vector_index": "sqlite-vec",
+  "corpus": {
+    "documents": 4,
+    "chunks": 255,
+    "ingest_s": 2.46,
+    "errors": {}
+  },
+  "questions": {
+    "answerable": 41,
+    "unanswerable": 4
+  },
+  "unmatched_evidence": [],
+  "retrieval": {
+    "bm25": {
+      "questions": 41,
+      "recall@1": 0.8536585365853658,
+      "recall@3": 0.9512195121951219,
+      "recall@5": 0.9512195121951219,
+      "recall@10": 1.0,
+      "mrr@10": 0.9018583042973286,
+      "latency_ms": {
+        "bm25": 0.26,
+        "total": 0.36
+      },
+      "wall_s": 0.016
+    },
+    "vector": {
+      "questions": 41,
+      "recall@1": 0.5121951219512195,
+      "recall@3": 0.6585365853658537,
+      "recall@5": 0.7560975609756098,
+      "recall@10": 0.8048780487804879,
+      "mrr@10": 0.6069396051103368,
+      "latency_ms": {
+        "embed_query": 0.06,
+        "total": 1.02,
+        "vector": 0.81
+      },
+      "wall_s": 0.043
+    },
+    "hybrid": {
+      "questions": 41,
+      "recall@1": 0.7073170731707317,
+      "recall@3": 0.8536585365853658,
+      "recall@5": 0.8780487804878049,
+      "recall@10": 0.9512195121951219,
+      "mrr@10": 0.7870886566008517,
+      "latency_ms": {
+        "bm25": 0.23,
+        "embed_query": 0.05,
+        "fuse": 0.02,
+        "total": 1.01,
+        "vector": 0.6
+      },
+      "wall_s": 0.042
+    },
+    "hybrid+rerank": {
+      "questions": 41,
+      "recall@1": 0.8536585365853658,
+      "recall@3": 0.9512195121951219,
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "mrr@10": 0.9146341463414634,
+      "latency_ms": {
+        "bm25": 0.27,
+        "embed_query": 0.08,
+        "fuse": 0.02,
+        "rerank": 3347.89,
+        "total": 3349.66,
+        "vector": 0.95
+      },
+      "wall_s": 137.338
+    }
+  },
+  "generation": null
+}

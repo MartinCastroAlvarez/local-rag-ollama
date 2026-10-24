@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#fbbf24"/>
+    </marker>
+  </defs>
+  <rect width="1280" height="640" fill="#0b1020"/>
+  <g font-family="Inter, 'Helvetica Neue', Arial, sans-serif">
+    <text x="80" y="112" font-size="64" font-weight="700" fill="#f8fafc">local-rag-ollama</text>
+    <text x="80" y="162" font-size="27" fill="#94a3b8">Ask your documents. Cited answers from open-weight models, fully offline.</text>
+    <text x="80" y="198" font-size="22" fill="#fbbf24">hybrid BM25 + vectors · RRF · local reranker · benchmark included · no paid APIs</text>
+
+    <!-- machine boundary -->
+    <rect x="56" y="236" width="1168" height="364" rx="22" fill="none" stroke="#334155" stroke-width="2" stroke-dasharray="10 8"/>
+    <text x="80" y="268" font-size="17" fill="#64748b">your machine · nothing leaves it</text>
+
+    <!-- files -->
+    <rect x="80" y="300" width="180" height="170" rx="16" fill="#111a33" stroke="#334155" stroke-width="2"/>
+    <text x="170" y="345" font-size="23" font-weight="600" fill="#e2e8f0" text-anchor="middle">Your files</text>
+    <text x="170" y="384" font-size="18" fill="#94a3b8" text-anchor="middle">.md  .html</text>
+    <text x="170" y="410" font-size="18" fill="#94a3b8" text-anchor="middle">.pdf  .txt</text>
+    <text x="170" y="448" font-size="14" fill="#64748b" text-anchor="middle">path-guarded ingest</text>
+
+    <!-- chunk -->
+    <rect x="300" y="300" width="170" height="170" rx="16" fill="#111a33" stroke="#334155" stroke-width="2"/>
+    <text x="385" y="345" font-size="23" font-weight="600" fill="#e2e8f0" text-anchor="middle">Chunk</text>
+    <text x="385" y="384" font-size="18" fill="#94a3b8" text-anchor="middle">by heading</text>
+    <text x="385" y="410" font-size="18" fill="#94a3b8" text-anchor="middle">+ overlap</text>
+    <text x="385" y="448" font-size="14" fill="#64748b" text-anchor="middle">nomic-embed-text</text>
+
+    <!-- index -->
+    <rect x="510" y="300" width="230" height="170" rx="16" fill="#111a33" stroke="#334155" stroke-width="2"/>
+    <text x="625" y="338" font-size="20" font-weight="600" fill="#e2e8f0" text-anchor="middle">index.sqlite3</text>
+    <rect x="532" y="356" width="186" height="38" rx="10" fill="#1c2540" stroke="#fbbf24" stroke-width="1.5"/>
+    <text x="625" y="381" font-size="17" fill="#e2e8f0" text-anchor="middle">BM25 · FTS5</text>
+    <rect x="532" y="404" width="186" height="38" rx="10" fill="#1c2540" stroke="#fbbf24" stroke-width="1.5"/>
+    <text x="625" y="429" font-size="17" fill="#e2e8f0" text-anchor="middle">vectors · sqlite-vec</text>
+
+    <!-- fuse -->
+    <rect x="780" y="300" width="160" height="170" rx="16" fill="#111a33" stroke="#334155" stroke-width="2"/>
+    <text x="860" y="345" font-size="23" font-weight="600" fill="#e2e8f0" text-anchor="middle">Fuse</text>
+    <text x="860" y="384" font-size="18" fill="#94a3b8" text-anchor="middle">RRF top-k</text>
+    <text x="860" y="410" font-size="18" fill="#94a3b8" text-anchor="middle">+ rerank</text>
+    <text x="860" y="448" font-size="14" fill="#64748b" text-anchor="middle">cross-encoder</text>
+
+    <!-- ollama -->
+    <rect x="980" y="300" width="220" height="170" rx="16" fill="#1a1708" stroke="#fbbf24" stroke-width="2.5"/>
+    <text x="1090" y="345" font-size="23" font-weight="600" fill="#fde68a" text-anchor="middle">ollama</text>
+    <text x="1090" y="380" font-size="18" fill="#e2e8f0" text-anchor="middle">qwen3 · llama3.2</text>
+    <rect x="1004" y="398" width="172" height="48" rx="12" fill="#0b1020" stroke="#334155" stroke-width="1.5"/>
+    <text x="1090" y="428" font-size="17" fill="#f8fafc" text-anchor="middle">answer <tspan fill="#fbbf24" font-weight="700">[1]</tspan> <tspan fill="#fbbf24" font-weight="700">[2]</tspan></text>
+
+    <!-- arrows -->
+    <line x1="262" y1="385" x2="296" y2="385" stroke="#fbbf24" stroke-width="3" marker-end="url(#arrow)"/>
+    <line x1="472" y1="385" x2="506" y2="385" stroke="#fbbf24" stroke-width="3" marker-end="url(#arrow)"/>
+    <line x1="742" y1="385" x2="776" y2="385" stroke="#fbbf24" stroke-width="3" marker-end="url(#arrow)"/>
+    <line x1="942" y1="385" x2="976" y2="385" stroke="#fbbf24" stroke-width="3" marker-end="url(#arrow)"/>
+
+    <text x="640" y="540" font-size="19" fill="#94a3b8" text-anchor="middle">sources delimited as untrusted · citations checked · refuses without context · UI on 127.0.0.1</text>
+    <text x="640" y="572" font-size="16" fill="#64748b" text-anchor="middle">local-rag ingest | ask | chat | eval | serve</text>
+  </g>
+</svg>
