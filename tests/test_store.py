@@ -123,4 +123,5 @@ def test_pack_roundtrip_and_length_check(tmp_path: Path) -> None:
             chunks=_chunks("a"),
             embeddings=[],
         )
-    assert Store(":memory:").stats()["documents"] == 0
+    with Store(":memory:") as memory:
+        assert memory.stats()["documents"] == 0

@@ -61,10 +61,14 @@ def open_runtime(
     with a different model would return noise."""
     client = client or OllamaClient(settings.ollama_url, timeout_s=settings.timeout_s)
     store = Store(settings.db_path)
-    if embedder is None and follow_index:
-        settings = settings_for_index(settings, store.meta("embedder"))
-    if embedder is None:
-        embedder = make_embedder(settings, client)
+    try:
+        if embedder is None and follow_index:
+            settings = settings_for_index(settings, store.meta("embedder"))
+        if embedder is None:
+            embedder = make_embedder(settings, client)
+    except BaseException:
+        store.close()
+        raise
     llm = llm or OllamaChat(client, settings.chat_model, temperature=settings.temperature)
     retriever = Retriever(store, embedder, settings, reranker=reranker)
     return Runtime(settings, client, store, embedder, retriever, RAG(retriever, llm, settings))

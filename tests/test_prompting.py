@@ -1,11 +1,17 @@
 from __future__ import annotations
 
+from pathlib import Path
+
+import pytest
+
+from local_rag import runtime as runtime_mod
 from local_rag.config import Settings
 from local_rag.prompting import build_messages
 from local_rag.prompting import cited_numbers
 from local_rag.prompting import clean_citations
 from local_rag.prompting import is_refusal
 from local_rag.runtime import settings_for_index
+from local_rag.store import Store
 from local_rag.store import StoredChunk
 
 REFUSAL = "I don't know based on the provided documents."
@@ -46,3 +52,23 @@ def test_settings_follow_the_index() -> None:
     assert (fe.embedder, fe.fastembed_model) == ("fastembed", "BAAI/bge-small-en-v1.5")
     ol = settings_for_index(Settings(embedder="hashing"), "ollama:bge-m3")
     assert (ol.embedder, ol.embed_model) == ("ollama", "bge-m3")
+
+
+def test_open_runtime_closes_the_store_when_setup_fails(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    closed: list[bool] = []
+    original = Store.close
+
+    def spy(self: Store) -> None:
+        closed.append(True)
+        original(self)
+
+    def broken(*args: object, **kwargs: object) -> None:
+        raise RuntimeError("no embedder")
+
+    monkeypatch.setattr(Store, "close", spy)
+    monkeypatch.setattr(runtime_mod, "make_embedder", broken)
+    with pytest.raises(RuntimeError):
+        runtime_mod.open_runtime(Settings(db_path=tmp_path / "x.sqlite3"))
+    assert closed == [True]

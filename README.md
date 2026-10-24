@@ -213,7 +213,7 @@ is sent anywhere. Threat model and disclosure policy: [SECURITY.md](SECURITY.md)
 
 ```bash
 poetry install
-poetry run pytest                # 161 offline tests, ~97% coverage
+poetry run pytest                # 162 offline tests, ~97% coverage
 poetry run ruff check local_rag tests examples scripts && poetry run mypy local_rag
 poetry run bandit -c pyproject.toml -q -r local_rag && poetry run pip-audit
 ```
