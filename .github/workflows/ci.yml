@@ -45,8 +45,9 @@ jobs:
           python-version: "3.12"
       - name: Install Poetry
         run: pipx install poetry
-      - name: Install dependencies (including the fastembed extra)
-        run: poetry install --no-interaction --no-root -E fastembed
+      # Core install only: the optional fastembed extra pins pillow<13 (see SECURITY.md).
+      - name: Install dependencies
+        run: poetry install --no-interaction --no-root
       - name: pip-audit
         run: |
           # Upgrade pip first so its own advisories don't fail the audit -

@@ -47,7 +47,16 @@ you ask, the local machine and filesystem, and the browser session on `127.0.0.1
 | Index at rest | The SQLite index holds the full text of your documents. It is created `0600` inside a `0700` directory. All SQL is parameterised, and free text reaches FTS5 only as quoted tokens joined with `OR`, so FTS operators and column filters can't be injected. |
 | Code execution | No `eval`, `exec`, `pickle`, `marshal`, `yaml` or `subprocess` in the package. An AST test enforces this, and also that no `noqa`/`nosec`/`type: ignore` hides a finding. |
 
-## 2. Running it safely
+## 2. Dependencies
+
+CI runs `pip-audit` on the core install (httpx, pypdf, sqlite-vec, FastAPI, uvicorn).
+The optional `fastembed` extra currently requires `pillow<13`. pip-audit reports
+advisories against pillow 12.x that are fixed in 13.0. fastembed uses pillow only for
+image embeddings, and this project only sends text to fastembed, so pillow never parses
+your data. Still, if you don't need the ONNX fallback or the reranker, don't install the
+extra. Use ollama embeddings instead.
+
+## 3. Running it safely
 
 - Ingest folders you'd be comfortable pasting into a chat with the model. Anything you
   ingest can end up in a prompt.
@@ -56,7 +65,7 @@ you ask, the local machine and filesystem, and the browser session on `127.0.0.1
 - Don't expose `local-rag serve` through a reverse proxy or tunnel. It has no auth.
 - Delete the index (`LOCAL_RAG_DB`) when you delete the documents. It holds a full copy.
 
-## 3. What this project never does
+## 4. What this project never does
 
 - Call a hosted LLM or embedding API, or send any telemetry.
 - Follow symlinks out of the ingest root, or read hidden files.
